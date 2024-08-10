@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview de Imagens</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .gallery img {
+      max-width: 200px;
+      margin: 10px;
+      border: 1px solid #ddd;
+      padding: 5px;
+      border-radius: 4px;
+    }
+    .nav {
+      margin-bottom: 20px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: blue;
+      margin-right: 10px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .pagination {
+      margin-top: 20px;
+    }
+    .pagination a {
+      text-decoration: none;
+      color: blue;
+      margin-right: 10px;
+    }
+    .pagination a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Preview de Imagens</h1>
+
+  <div class="nav">
+    <% if (currentPath) { %>
+      <a href="?path=<%= parentPath %>">Voltar</a>
+    <% } %>
+  </div>
+
+  <div class="nav">
+    <% directories.forEach(function(directoryUrl) { %>
+      <a href="<%= directoryUrl %>"><%= decodeURIComponent(directoryUrl.split('=')[1]) %></a>
+    <% }); %>
+  </div>
+
+  <div class="gallery">
+    <% images.forEach(function(imageUrl) { %>
+      <div>
+        <a href="<%= imageUrl %>" download>
+          <img src="<%= imageUrl %>" alt="<%= imageUrl.split('/').pop() %>">
+        </a>
+        <p>
+          <a href="<%= imageUrl %>" download>
+            <%= imageUrl.split('/').pop() %>
+          </a>
+        </p>
+      </div>
+    <% }); %>
+  </div>
+
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="?path=<%= currentPath %>&page=<%= page - 1 %>">Anterior</a>
+    <% } %>
+    <% if (page < totalPages) { %>
+      <a href="?path=<%= currentPath %>&page=<%= page + 1 %>">Próximo</a>
+    <% } %>
+  </div>
+</body>
+</html>
